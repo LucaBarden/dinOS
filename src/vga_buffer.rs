@@ -1,5 +1,3 @@
-mod vga_buffer;
-
 #[allow(dead_code)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[repr(u8)]
@@ -19,7 +17,7 @@ pub enum Color {
     LightRed = 12,
     Pink = 13,
     Yellow = 14,
-    White = 15
+    White = 15,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -53,9 +51,8 @@ pub struct Writer {
     buffer: &'static mut Buffer,
 }
 
-
 impl Writer {
-    pub fn write_bytes(&mut self, byte: u8) {
+    pub fn write_byte(&mut self, byte: u8) {
         match byte {
             b'\n' => self.new_line(),
             byte => {
@@ -76,16 +73,28 @@ impl Writer {
         }
     }
 
-    fn new_line(&mut self) {/* TODO */}
+    fn new_line(&mut self) { /* TODO */
+    }
 
     pub fn write_string(&mut self, s: &str) {
         for byte in s.bytes() {
             match byte {
                 //print ascii byte or newline
-                0x20..=0x7e | b'\n' => self.write_bytes(byte),
-                _ => self.write_bytes(0xfe),
+                0x20..=0x7e | b'\n' => self.write_byte(byte),
+                _ => self.write_byte(0xfe),
             }
         }
     }
 }
 
+pub fn print_something() {
+    let mut writer = Writer {
+        column_position: 0,
+        color_code: ColorCode::new(Color::Yellow, Color::Black),
+        buffer: unsafe { &mut *(0xb8000 as *mut Buffer) },
+    };
+
+    writer.write_byte(b'H');
+    writer.write_string("ello ");
+    writer.write_string("Wörld!");
+}
