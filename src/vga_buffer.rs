@@ -77,5 +77,15 @@ impl Writer {
     }
 
     fn new_line(&mut self) {/* TODO */}
+
+    pub fn write_string(&mut self, s: &str) {
+        for byte in s.bytes() {
+            match byte {
+                //print ascii byte or newline
+                0x20..=0x7e | b'\n' => self.write_bytes(byte),
+                _ => self.write_bytes(0xfe),
+            }
+        }
+    }
 }
 
