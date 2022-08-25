@@ -17,14 +17,14 @@ pub extern "C" fn _start() -> ! {
     #[cfg(test)]
     test_main();
 
-    loop {}
+    din_os::hlt_loop();
 }
 
 #[cfg(not(test))]
 #[panic_handler] // this function is called on panic
 fn panic(info: &PanicInfo) -> ! {
     println!("{}", info);
-    loop {}
+    din_os::hlt_loop();
 }
 
 #[cfg(test)]
