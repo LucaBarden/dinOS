@@ -64,9 +64,7 @@ pub fn test_runner(tests: &[&dyn Testable]) {
 
 #[test_case]
 fn trivial_assertion() {
-    serial_print!("trivial assertion... ");
-    assert_eq!(1, 2);
-    serial_println!("[ok]");
+    assert_eq!(1, 1);
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
