@@ -12,6 +12,9 @@ pub extern "C" fn _start() -> ! {
     // since the linker looks for a function called _start(), this is our new entry point
 
     println!("Hello World{}", "!");
+    din_os::init();
+
+    x86_64::instructions::interrupts::int3();
 
     #[cfg(test)]
     test_main();
