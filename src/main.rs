@@ -14,11 +14,6 @@ pub extern "C" fn _start() -> ! {
     println!("Hello World{}", "!");
     din_os::init();
 
-    fn stack_overflow() {
-        stack_overflow();
-    }
-    stack_overflow();
-
     #[cfg(test)]
     test_main();
 
