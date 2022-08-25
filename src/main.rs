@@ -6,7 +6,8 @@ mod vga_buffer;
 use core::panic::PanicInfo;
 
 #[panic_handler] // this function is called on panic
-fn panic(_info: &PanicInfo) -> ! {
+fn panic(info: &PanicInfo) -> ! {
+    println!("{}", info);
     loop {}
 }
 
@@ -14,10 +15,6 @@ fn panic(_info: &PanicInfo) -> ! {
 pub extern "C" fn _start() -> ! {
     // since the linker looks for a function called _start(), this is our new entry point
 
-    use core::fmt::Write;
-    vga_buffer::WRITER.lock().write_str("Hello again").unwrap();
-    write!(vga_buffer::WRITER.lock(), ", some numbers: {} {}", 42, 1.337).unwrap();
-
-    
+    println!("Hello World{}", "!");
     loop {}
 }
